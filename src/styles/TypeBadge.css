@@ -1,0 +1,27 @@
+.badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  padding: 6px 10px;
+  color: white;
+  transition: filter, scale .2s ease;
+}
+
+.badge:hover {
+  filter: saturate(1.5);
+  scale: 1.1;
+}
+
+.badge::first-letter {
+  text-transform: uppercase;
+}
+
+.badge__icon {
+  display: flex;
+  transform: scale(.7);
+}
+
+.badge__text {
+  margin-right: 4px;
+}
