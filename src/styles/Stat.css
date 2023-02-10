@@ -1,0 +1,54 @@
+.stat {
+  display: grid;
+  grid-template-columns: 45px 25px auto;
+  align-items: center;
+  width: 100%;
+}
+
+.stat__value {
+  font-size: 12px;
+}
+
+.stat__name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.stat__bar__container {
+  width: 100%;
+  border-radius: 15px;
+  background-color: #dfdfdf;
+}
+
+.stat__bar {
+  height: 8px;
+  background-color: rgb(137, 137, 137);
+  border-radius: 15px;
+  transition: width .3s ease;
+  border: 1px solid #737373;
+  border-color: rgba(0,0,0,.15);
+}
+
+.stat__bar__color-lv1 {
+  background-color: #f34444;
+}
+
+.stat__bar__color-lv2 {
+  background-color: #ff7f0f;
+}
+
+.stat__bar__color-lv3 {
+  background-color: #ffdd57;
+}
+
+.stat__bar__color-lv4 {
+  background-color: #a0e515;
+}
+
+.stat__bar__color-lv5 {
+  background-color: #23cd5e;
+}
+
+.stat__bar__color-lv6 {
+  background-color: #00c2b8;
+}
