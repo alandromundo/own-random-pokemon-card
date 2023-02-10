@@ -1,0 +1,14 @@
+.card__pokemon__stats {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #ccc;
+  padding: 16px 0;
+}
+
+.stat__title {
+  font-weight: bold;
+}
