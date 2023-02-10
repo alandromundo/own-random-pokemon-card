@@ -1,0 +1,12 @@
+.card__pokemon__data {
+  display: flex;
+  width: 60%;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.data__title {
+  font-weight: bold;
+}
