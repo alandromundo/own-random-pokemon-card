@@ -6,6 +6,7 @@ import PokemonStats from './PokemonStats'
 import Navbar from './Navbar'
 import TypeBadge from './TypeBadge'
 import { MAX_POKEMON_NUMBER, MIN_POKEMON_NUMBER } from '../constants'
+import { getANewPokemonRandomNumber } from '../services/randomPokemonNumber'
 import SkeletonLoader from './SkeletonLoader'
 import '../styles/App.css'
 
@@ -20,17 +21,7 @@ function App () {
   useEffect(() => {
     // To get a random number between 1 and 151 and set randomNumber with it
     const timer = setTimeout(() => {
-      fetch('https://csrng.net/csrng/csrng.php?min=1&max=151')
-        .then(res => res.json())
-        .then(data => {
-          const { random } = data[0]
-          setRandomNumber(random)
-        })
-        .catch(() => {
-          console.log('Generating a random number without API.')
-          const newRandomNumber = Math.floor(Math.random() * (MAX_POKEMON_NUMBER - MIN_POKEMON_NUMBER + 1)) + MIN_POKEMON_NUMBER
-          setRandomNumber(newRandomNumber)
-        })
+      getANewRandomPokemon().then(setRandomNumber)
     }, 5000)
     return () => clearTimeout(timer)
   }, [])
@@ -67,18 +58,9 @@ function App () {
       })
   }, [randomNumber])
 
-  const getANewPokemon = () => {
-    fetch('https://csrng.net/csrng/csrng.php?min=1&max=151')
-      .then(res => res.json())
-      .then(data => {
-        const { random } = data[0]
-        setRandomNumber(random)
-      })
-      .catch(() => {
-        console.log('Generating a random number without API.')
-        const newRandomNumber = Math.floor(Math.random() * (MAX_POKEMON_NUMBER - MIN_POKEMON_NUMBER + 1)) + MIN_POKEMON_NUMBER
-        setRandomNumber(newRandomNumber)
-      })
+  const getANewRandomPokemon = async () => {
+    const newRandomNumber = await getANewPokemonRandomNumber()
+    setRandomNumber(newRandomNumber)
   }
 
   const nextPokemon = () => {
@@ -93,27 +75,28 @@ function App () {
 
   return (
     <main className='main-container'>
-      {<SkeletonLoader /> && <section className='card'>
-        <header className={`card__image-container ${pokemonTypes[0]}__type`}>
-          <Navbar pokemonNumber={randomNumber} nextPokemon={nextPokemon} previousPokemon={previousPokemon} />
-          <PokemonImage pokemonImage={pokemonImage} pokemonName={pokemonName} />
-        </header>
-        <PokemonName pokemonName={pokemonName} />
-        <span className='card__badges'>
-          {
-            pokemonTypes.map((type, index) => {
-              return (
-                <TypeBadge key={index}>
-                  {type}
-                </TypeBadge>
-              )
-            })
-          }
-        </span>
-        <PokemonPhysicalCharacteristics pokemonPhysicalCharacteristics={pokemonPhysicalCharacteristics} />
-        <PokemonStats pokemonStats={pokemonStats} />
-                             </section>}
-      <button className='card__new-pokemon' onClick={getANewPokemon}>Get a Random Pokemon!</button>
+      {<SkeletonLoader /> &&
+        <section className='card'>
+          <header className={`card__image-container ${pokemonTypes[0]}__type`}>
+            <Navbar pokemonNumber={randomNumber} nextPokemon={nextPokemon} previousPokemon={previousPokemon} />
+            <PokemonImage pokemonImage={pokemonImage} pokemonName={pokemonName} />
+          </header>
+          <PokemonName pokemonName={pokemonName} />
+          <span className='card__badges'>
+            {
+              pokemonTypes.map((type, index) => {
+                return (
+                  <TypeBadge key={index}>
+                    {type}
+                  </TypeBadge>
+                )
+              })
+            }
+          </span>
+          <PokemonPhysicalCharacteristics pokemonPhysicalCharacteristics={pokemonPhysicalCharacteristics} />
+          <PokemonStats pokemonStats={pokemonStats} />
+        </section>}
+      <button className='card__new-pokemon' onClick={getANewRandomPokemon}>Get a Random Pokemon!</button>
     </main>
   )
 }
